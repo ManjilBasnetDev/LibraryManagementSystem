@@ -64,7 +64,7 @@ username = CTkEntry(master=loginView.tab("User"),
                     placeholder_text="Enter your username",
                     fg_color="#ffffff",
                     text_color="black",
-                    height = 40, width = 250)
+                    height = 40, width = 300)
 username.place(relx=0.12, rely=0.3)
 
 #to change border-color when clicked, (focus on):
@@ -88,8 +88,16 @@ password = CTkEntry(master=loginView.tab("User"),
                     height = 40,
                     fg_color="#ffffff",
                     text_color="black",
-                    width = 250)
+                    width = 300)
 password.place(relx=0.12, rely=0.55)
+
+login_button = CTkButton(master=loginView.tab("User"),
+                        text = "Log in",
+                        font=("Calibri",20),
+                        corner_radius=15,
+                        fg_color="green",
+                        height=40, width = 300)
+login_button.place(x = 50, y = 280)
 
 #Forgot password? label:
 
@@ -100,13 +108,6 @@ forgot_label = Label(loginView.tab("User"),
                         font = ("Calibri",10,"underline"))
 forgot_label.place(relx = 0.12, rely = 0.68)
 
-login_button = CTkButton(master=loginView.tab("User"),
-                        text = "Log in",
-                        font=("Calibri",20),
-                        corner_radius=15,
-                        fg_color="green",
-                        height=30, width = 70)
-login_button.place(relx=0.36,rely=0.8)
 
 
 ##############################librariannnn
