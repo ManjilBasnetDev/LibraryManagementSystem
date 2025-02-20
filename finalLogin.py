@@ -40,11 +40,11 @@ loginView.add("User")
 loginView.add("Librarian")
 loginView.place(relx = 0.6, rely = 0.2)
 
-details = CTkLabel(master = loginView.tab("User"),
-                   text = "Enter your login details",
-                   text_color="#d74e3c",
-                   font = ("Georgia Bold",18))
-details.place(relx = 0.2, rely = 0.08)
+# details = CTkLabel(master = loginView.tab("User"),
+#                    text = "Enter your login details",
+#                    text_color="#d74e3c",
+#                    font = ("Georgia Bold",18))
+# details.place(relx = 0.2, rely = 0.08)
 
 
 #Creating username entities
@@ -54,7 +54,7 @@ usernameLabel = CTkLabel(master=loginView.tab("User"),
                          font=("Helvatica",20),
                          width = 30, height = 30,
                          )
-usernameLabel.place(relx = 0.12, rely = 0.2)
+usernameLabel.place(relx = 0.12, rely = 0.06)
 
 # Creating entry box for username:
 
@@ -65,7 +65,7 @@ username = CTkEntry(master=loginView.tab("User"),
                     fg_color="#ffffff",
                     text_color="black",
                     height = 40, width = 300)
-username.place(relx=0.12, rely=0.3)
+username.place(relx=0.12, rely=0.156)
 
 #to change border-color when clicked, (focus on):
 
@@ -78,7 +78,7 @@ passwordLabel = CTkLabel(master = loginView.tab("User"),
                          font=("Helvatica",20),
                          width = 30, height = 30,
                          )
-passwordLabel.place(relx = 0.12, rely = 0.45)
+passwordLabel.place(relx = 0.12, rely = 0.3)
 
 # Creating entry box for username:
 
@@ -89,7 +89,7 @@ password = CTkEntry(master=loginView.tab("User"),
                     fg_color="#ffffff",
                     text_color="black",
                     width = 300)
-password.place(relx=0.12, rely=0.55)
+password.place(relx=0.12, rely=0.4)
 
 login_button = CTkButton(master=loginView.tab("User"),
                         text = "Log in",
@@ -97,7 +97,7 @@ login_button = CTkButton(master=loginView.tab("User"),
                         corner_radius=15,
                         fg_color="green",
                         height=40, width = 300)
-login_button.place(x = 50, y = 280)
+login_button.place(x = 50, y = 200)
 
 #Forgot password? label:
 
@@ -105,12 +105,21 @@ forgot_label = Label(loginView.tab("User"),
                         text = "Forgot password?",
                         fg="black",
                         bg="#dfd8ee",
+                        height=50,
+                        width = 30,
                         font = ("Calibri",10,"underline"))
-forgot_label.place(relx = 0.12, rely = 0.68)
+# forgot_label.place(relx = 0.12, rely = 0.78)
+
+
+forgot_label = CTkLabel(master=loginView.tab("User"),
+                        text = "Forgot Password?",
+                        fg_color = "blue",
+                        bg_color = "#dfd8ee"
+                        )
 
 
 
-##############################librariannnn
+##############################librariannnn##########################
 
 
 details= CTkLabel(master = loginView.tab("Librarian"),
@@ -171,14 +180,6 @@ login_button = CTkButton(master=loginView.tab("Librarian"),
                         height=30, width = 70)
 login_button.place(relx=0.36,rely=0.8)
 
-#Forgot password? label:
-
-forgot_label = Label(loginView.tab("User"),
-                        text = "Forgot password?",
-                        fg="black",
-                        bg="#dfd8ee",
-                        font = ("Calibri",10,"underline"))
-forgot_label.place(relx = 0.12, rely = 0.68)
 # logo = Image.open("logo.png")
 # logo=logo.resize((50,50))
 # logoF = ImageTk.PhotoImage(logo)
