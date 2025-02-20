@@ -1,6 +1,4 @@
-from tkinter import *
-from customtkinter import *
-from PIL import Image, ImageTk
+
 
 win = CTk()
 win.iconbitmap("logo.png")
