@@ -1,8 +1,5 @@
 
 
-win = CTk()
-win.iconbitmap("logo.png")
-win.geometry("1920x1080")  # Set a smaller window size
 
 # Create the background frame with a custom color
 bg_frame = CTkFrame(master=win, fg_color="#dfd8ee", corner_radius=0)
