@@ -10,6 +10,7 @@ import json
 
 
 # Helloo
+#bye
 # Initialize the main window
 root = ctk.CTk()
 root.geometry("900x600")
