@@ -101,8 +101,25 @@ login_button = CTkButton(master=loginView.tab("Login"),
                         command = checkLogin)
 login_button.place(x = 50, y = 200)
 
+
+def open_new_window(event):
+    forgot_win = Toplevel()
+    forgot_win.geometry("300x200+200+100")  # Width x Height + x_offset + y_offset
+    forgot_win.title("New Window")
+    forgot_win.resizable(False, False)
+    forgot_win.configure(bg="#ADD8E6")
+
+    label = CTkLabel(master=forgot_win, text="This is a new window!", text_color="black")
+    label.pack(pady=20)
+
+    close_button = CTkButton(master=forgot_win, text="Close", command=forgot_win.destroy)
+    close_button.pack(pady=20)
+    forgot_win.pack()
+
 #Forgot password? label:
 
+
+# Label that opens a new window when clicked
 forgot_label = Label(master = loginView.tab("Login"),
                         text = "Forgot password?",
                         fg="black",
@@ -110,6 +127,15 @@ forgot_label = Label(master = loginView.tab("Login"),
                         font = ("Calibri",20,"underline"))
 
 forgot_label.place(x = 145, y = 340 )
+forgot_label.bind("<Button-1>", open_new_window)  
+
+
+
+
+
+
+
+
 
 
 
