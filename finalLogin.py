@@ -1,6 +1,8 @@
+from customtkinter import *
+from tkinter import *
+from PIL import ImageTk
 
-
-
+win = CTk()
 # Create the background frame with a custom color
 bg_frame = CTkFrame(master=win, fg_color="#dfd8ee", corner_radius=0)
 bg_frame.pack(fill="both", expand=True)
