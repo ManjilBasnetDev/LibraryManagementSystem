@@ -46,7 +46,11 @@ loginView.place(relx = 0.6, rely = 0.2)
 
 ##############Loginnnnnnnnn#######
 
-
+def checkLogin():
+    if Login_password_Entry.get() == '' or Login_username_Entry.get() == '':
+        messagebox.showerror("Invalid Credentials", "All fields are mandatory")
+    else:
+        pass
 #Creating username entities
 
 Login_usernameLabel = CTkLabel(master=loginView.tab("Login"), 
@@ -58,14 +62,14 @@ Login_usernameLabel.place(relx = 0.12, rely = 0.06)
 
 # Creating entry box for username:
 
-Login_username = CTkEntry(master=loginView.tab("Login"),
+Login_username_Entry = CTkEntry(master=loginView.tab("Login"),
                     border_color="black",
                     corner_radius=7,
                     placeholder_text="Enter your username",
                     fg_color="#ffffff",
                     text_color="black",
                     height = 40, width = 300)
-Login_username.place(relx=0.12, rely=0.156)
+Login_username_Entry.place(relx=0.12, rely=0.156)
 
 
 #Creating password entities
@@ -93,7 +97,8 @@ login_button = CTkButton(master=loginView.tab("Login"),
                         font=("Calibri",20),
                         corner_radius=15,
                         fg_color="green",
-                        height=40, width = 300)
+                        height=40, width = 300,
+                        command = checkLogin)
 login_button.place(x = 50, y = 200)
 
 #Forgot password? label:
@@ -124,14 +129,14 @@ Create_usernameLabel.place(relx = 0.12, rely = 0.06)
 
 # Creating Entrybox of username for Create New Account:
 
-Create_username = CTkEntry(master=loginView.tab("Create New"),
+Create_username_Entry = CTkEntry(master=loginView.tab("Create New"),
                     border_color="black",
                     corner_radius=7,
                     placeholder_text="Enter your username",
                     fg_color="#ffffff",
                     text_color="black",
                     height = 40, width = 300)
-Create_username.place(relx=0.12, rely=0.156)
+Create_username_Entry.place(relx=0.12, rely=0.156)
 
 
 #### Password Entrybox for Create New Account ########
@@ -159,7 +164,7 @@ Create_passwordLabel.place(relx = 0.12, rely = 0.3)
 
 ######## Radio button : Choose user or librarian while creating a account 
 
-user_or_librarian = StringVar(value="")
+user_or_librarian = StringVar()
 
 # Radio buttons
 radio_User = CTkRadioButton(master=loginView.tab("Create New"), text="User",
@@ -219,6 +224,8 @@ def open_new_win_create():
     
     def id_Check():
         if Librarian_ID_Entry.get() == "0956":
+            Create_username_Entry.delete(0,END)
+            Create_password_Entry.delete(0,END)
             show_popup()
             new_win_Create.destroy()
         else:
@@ -241,6 +248,18 @@ def open_new_win_create():
     new_win_Create.mainloop()
 
 
+def checkRadio():
+    if Create_password_Entry.get() == '' or Create_username_Entry.get() == '' or user_or_librarian.get() == '':
+        messagebox.showerror("Invalid Credentials", "All fields are mandatory")
+    elif user_or_librarian.get() == "2":
+        open_new_win_create()
+    elif user_or_librarian.get() == '1':
+        Create_username_Entry.delete(0,END)
+        Create_password_Entry.delete(0,END)
+        messagebox.showinfo("User Account Created", "Done, Please Login")
+    else:
+        pass
+
 ##### Final Create Account Button #####
 
 Create_button = CTkButton(master=loginView.tab("Create New"),
@@ -248,7 +267,7 @@ Create_button = CTkButton(master=loginView.tab("Create New"),
                         font=("Calibri",20),
                         corner_radius=15,
                         fg_color="green",
-                        height=40, width = 300, command= open_new_win_create)
+                        height=40, width = 300, command= checkRadio)
 Create_button.place(x = 50, y = 260)
 
 win.mainloop()  # Make the window visible
