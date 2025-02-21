@@ -19,7 +19,7 @@ photoInnerFrame = CTkFrame(master=outerFrame, height=1000, width=600, corner_rad
 photoInnerFrame.place(x=0,y=0)
 
 #Loading the image with Image.open
-image = Image.open("finaltest69.jpg")
+image = Image.open("loginPhoto.jpg")
 image = image.resize((800,1000))
 photo = ImageTk.PhotoImage(image)
 
