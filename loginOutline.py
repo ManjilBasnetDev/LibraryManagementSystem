@@ -3,6 +3,7 @@ from customtkinter import *
 from PIL import Image, ImageTk
 from tkinter import messagebox
 from tkcalendar import DateEntry
+import sqlite3
 
 win = CTk()
 win.iconbitmap("logo.png")
