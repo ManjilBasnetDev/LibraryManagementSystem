@@ -104,42 +104,38 @@ login_button = CTkButton(master=loginView.tab("Login"),
                         command = checkLogin)
 login_button.place(x = 50, y = 200)
 
+### FORGOTTTTT FUNCTIONNNNN
 
 def open_new_window_forgot(event):
     forgot_win = Toplevel()
     forgot_win.geometry("500x500+400+300")  # Width x Height + x_offset + y_offset
-    forgot_win.title("New Window")
+    forgot_win.title("Forgot Password Window")
     forgot_win.resizable(False, False)
     forgot_win.configure(bg="#dfd8ee")
 
 
-    def forgot_pass_Login():
+    ### Security Questions Label for Function 
 
-        ####### Label for Security Questions ########
-
-        question_Label = CTkLabel(master = forgot_win,
+    question_Label = CTkLabel(master = forgot_win,
                                     text  = "Security Questions",
                                     text_color= "black",
                                     font = ("Arial Bold", 20)
                                     )
-        question_Label.pack(pady = 15)
+    question_Label.pack(pady = 15)
 
-        dob_Label = CTkLabel(forgot_win, text = "Select your DOB:", text_color="black", font = ("Calibri", 18))
-        dob_Label.place(relx = 0.07, rely= 0.15)
+    dob_Label = CTkLabel(forgot_win, text = "Select your DOB:", text_color="black", font = ("Calibri", 18))
+    dob_Label.place(relx = 0.07, rely= 0.15)
 
-
-            ####### Date Entry WIdget ######
-        dob_select = DateEntry(forgot_win, background = "#dfd8ee", foreground = "black",
+    dob_select = DateEntry(forgot_win, background = "#dfd8ee", foreground = "black",
                                borderwidth = 2,
                                 font=("Arial", 11), 
                                 width=20,
                                )
-        dob_select.place(relx = 0.4, rely = 0.16)
+    dob_select.place(relx = 0.4, rely = 0.16)
 
+    ####### Function to retrieve the date ######
 
-        ####### Function to retrieve the date ######
-
-        def get_date():
+    def get_date():
             dob = dob_select.get()
             got_date_Label = CTkLabel(forgot_win, text = (f"You selected : {dob}"),
                                       text_color="black",
@@ -147,20 +143,20 @@ def open_new_window_forgot(event):
                                       )
             got_date_Label.place(x = 170, rely =0.25)
 
-        ######## Select Date Button ########
+    ######## Select Date Button ########
 
-        select_date_button = CTkButton(master = forgot_win,
+    select_date_button = CTkButton(master = forgot_win,
                                         text = "Select",
                                         text_color="white",
                                         font = ("Arial ",15),
                                         width = 115,
                                         fg_color="green", command = get_date )
-        select_date_button.place(relx = 0.07, rely= 0.25)
+    select_date_button.place(relx = 0.07, rely= 0.25)
 
-        school_Label1 = CTkLabel(forgot_win, text = "Your first school :", text_color="black", font = ("Calibri", 18))
-        school_Label1.place(relx = 0.07, rely= 0.4)
+    school_Label = CTkLabel(forgot_win, text = "Your first school :", text_color="black", font = ("Calibri", 18))
+    school_Label.place(relx = 0.07, rely= 0.4)
 
-        school_Entry = CTkEntry(master=forgot_win,
+    school_Entry = CTkEntry(master=forgot_win,
                     border_color="black",
                     corner_radius=7,
                     placeholder_text="School Name",
@@ -168,21 +164,9 @@ def open_new_window_forgot(event):
                     text_color="black",
                     height = 30, width = 200)
 
-        school_Entry.place(relx = 0.4, rely= 0.4)
+    school_Entry.place(relx = 0.4, rely= 0.4)
 
-
-
-
-        def forgot_qsn_check():
-            if school_Entry == '':
-                messagebox.showerror("Invalid", "All fields are mandatory")
-            else:
-                pass
-
-        
-        ####### Function to retrieve the school name ######
-
-        def get_school():
+    def get_school():
             school = school_Entry.get()
 
             school_show = CTkLabel(forgot_win, text = school,
@@ -191,43 +175,34 @@ def open_new_window_forgot(event):
                                       )
             school_show.place(x = 170, rely =0.5)
             school_show.focus()
-             
-                        #### SCHOOL SELECT BUTTON 
 
-        select_school_button = CTkButton(master = forgot_win,
+    select_school_button = CTkButton(master = forgot_win,
                                         text = "Select",
                                         text_color="white",
                                         font = ("Arial ",15),
                                         width = 115,
                                         fg_color="green", command = get_school)
-        select_school_button.place(relx = 0.07, rely= 0.5)
+    select_school_button.place(relx = 0.07, rely= 0.5)
 
-        #### Showing School 
-
-        School_Label = CTkLabel(forgot_win, text = school_Entry.get(),
-                                      text_color="black",
-                                      font = ("Calibri",15)
-                                      )
-        School_Label.place(x = 170, rely =0.25)
-
-
-    forgot_pass_Login()
-
-        ############## Submit Question Button #######
-           
+    def check_qsn():
+        def empty():
+            empty_School = CTkLabel(forgot_win, text = "All fields are mandatory!", text_color="red")
+            empty_School.place(relx =0.32, rely = 0.82)
+            
+        if school_Entry.get() is None:
+            empty()
+            
+        else:
+            pass
+    
     submit_qsn_button = CTkButton(master=forgot_win, text="Submit",
                                     fg_color="green",
                                     text_color="white",
-                                    command = forgot_qsn_check  
+                                    command = check_qsn
                                 )
     submit_qsn_button.place(relx = 0.32, rely = 0.7)
 
-    forgot_win.mainloop()
-
-#Forgot password? label:
-
-
-# Label that opens a new window when clicked
+#### FORGOT LABELLLLLLLLL
 forgot_label = Label(master = loginView.tab("Login"),
                         text = "Forgot password?",
                         fg="black",
