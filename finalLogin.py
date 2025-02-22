@@ -4,18 +4,6 @@ from PIL import Image, ImageTk
 from tkinter import ttk
 from tkinter import messagebox
 import webbrowser
-import json
-
-
-
-
-# Helloo
-
-#Bye
-
-# Test Final
-#Aryan Comment
-
 
 
 # Initialize the main window
@@ -63,29 +51,6 @@ def home_page():
         img_label.image = img  # Keep a reference
         img_label.pack(expand=True, fill="both")
 
-# Adjust book images to fit dynamically in the available space
-def books_available():
-    label = ctk.CTkLabel(main_frame, text="Books Available", font=("Arial", 24, "bold"))
-    label.pack(pady=10)
-    
-    table_frame = ttk.Frame(main_frame, borderwidth=5, relief="solid")
-    table_frame.pack(pady=10, padx=20, expand=True, fill="both")
-    
-    columns = ("Title", "Author", "Genre")
-    book_table = ttk.Treeview(table_frame, columns=columns, show="headings", height=15)
-    
-    
-    for col in columns:
-        book_table.heading(col, text=col, anchor="center")
-        book_table.column(col, width=400, anchor="center")
-    
-    vsb = ttk.Scrollbar(table_frame, orient="vertical", command=book_table.yview)
-    vsb.pack(side="right", fill="y")
-    book_table.configure(yscrollcommand=vsb.set)
-    book_table.pack(expand=True, fill="both")
-    
-    for book in load_books():
-        book_table.insert("", "end", values=(book["title"], book["author"], book["genre"]))
 
 # Load book list
 def load_books():
@@ -108,14 +73,6 @@ def load_books():
         {"title": "love", "author": "AryanShrestha", "genre": "Social"}
     ]
 
-# Buy Books Page
-def buy_books():
-    label = ctk.CTkLabel(main_frame, text="Buy Books", font=("Arial", 24, "bold"))
-    label.pack(pady=20)
-    
-    ctk.CTkLabel(main_frame, text="Select a book to buy:", font=("Arial", 14)).pack(pady=5)
-    ctk.CTkButton(main_frame, text="Purchase Now", command=lambda: show_frame(home_page)).pack(pady=10)
-
 
 # Books Available Page
 def books_available():
@@ -123,19 +80,25 @@ def books_available():
     label.pack(pady=10)
 
     table_frame = ttk.Frame(main_frame, borderwidth=2, relief="solid")
-    table_frame.pack(pady=10, padx=20, expand=True, fill="both")
+    table_frame.pack(pady=20, padx=30, expand=True, fill="both")
 
     columns = ("Title", "Author", "Genre")
     book_table = ttk.Treeview(table_frame, columns=columns, show="headings", height=10)
 
+    style = ttk.Style()
+    style.configure("Treeview.Heading", font=("Arial", 26, "bold"))  # Font size for headings
+    style.configure("Treeview", font=("Arial", 18), rowheight=50)  # Increased row height for more spacing
+
+    column_widths = {"Title": 600, "Author": 500, "Genre": 450}  # Further increased column widths
+
     for col in columns:
         book_table.heading(col, text=col, anchor="center")
-        book_table.column(col, width=200, anchor="center")
+        book_table.column(col, width=column_widths[col], anchor="center")
 
     vsb = ttk.Scrollbar(table_frame, orient="vertical", command=book_table.yview)
     vsb.pack(side="right", fill="y")
     book_table.configure(yscrollcommand=vsb.set)
-    book_table.pack(expand=True, fill="both")
+    book_table.pack(expand=True, fill="both", pady=10)
 
     for book in load_books():
         book_table.insert("", "end", values=(book["title"], book["author"], book["genre"]))
@@ -262,3 +225,4 @@ main_frame.pack(side="right", expand=True, fill="both")
 show_frame(home_page)
 
 root.mainloop()
+
