@@ -11,6 +11,20 @@ win.geometry("1920x1080")  # Set a smaller window size
 
 Librarian_ID = "0956"
 
+
+# DATABASE BEGINNING
+
+# conn = sqlite3.connect('login.db')
+# c = conn.cursor()
+
+# c.execute("""CREATE TABLE Login(
+#           Username text PRIMARY KEY,
+#           Password text
+#           )
+# """)
+
+# conn.commit()
+
 # Create the background frame with a custom color
 bg_frame = CTkFrame(master=win, fg_color="#dfd8ee", corner_radius=0)
 bg_frame.pack(fill="both", expand=True)
