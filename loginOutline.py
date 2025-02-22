@@ -185,15 +185,15 @@ def open_new_window_forgot(event):
     select_school_button.place(relx = 0.07, rely= 0.5)
 
     def check_qsn():
-        def empty():
-            empty_School = CTkLabel(forgot_win, text = "All fields are mandatory!", text_color="red")
-            empty_School.place(relx =0.32, rely = 0.82)
-            
-        if school_Entry.get() is None:
-            empty()
-            
-        else:
-            pass
+         def clear(event):
+              empty_qsn_label.destroy()
+         if school_Entry.get() == '':
+              empty_qsn_label = CTkLabel(forgot_win,
+                                         text = "This field is mandatory",
+                                         text_color="red",
+                                         font = ("Calibri", 18))
+              empty_qsn_label.place(relx = 0.44, rely = 0.5)
+              select_school_button.bind("<Button-1>", clear)
     
     submit_qsn_button = CTkButton(master=forgot_win, text="Submit",
                                     fg_color="green",
