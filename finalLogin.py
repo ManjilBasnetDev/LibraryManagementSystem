@@ -124,23 +124,14 @@ forgot_label = Label(master = loginView.tab("Login"),
                         text = "Forgot password?",
                         fg="black",
                         bg="#dfd8ee",
-                        font = ("Calibri",20,"underline"))
+                        font = ("Calibri",20,"underline"),
+                        cursor="hand2")
 
 forgot_label.place(x = 145, y = 340 )
 forgot_label.bind("<Button-1>", open_new_window)  
 
 
-
-
-
-
-
-
-
-
-
 ##############################Create New##########################
-
 
 
 ######## Creating Username Label for Create New Account
