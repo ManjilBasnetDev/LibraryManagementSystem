@@ -52,6 +52,8 @@ def checkLogin():
         messagebox.showerror("Invalid Credentials", "All fields are mandatory")
     else:
         pass
+
+
 #Creating username entities
 
 Login_usernameLabel = CTkLabel(master=loginView.tab("Login"), 
@@ -168,10 +170,17 @@ def open_new_window_forgot(event):
 
         school_Entry.place(relx = 0.4, rely= 0.4)
 
-        #### SCHOOL SELECT BUTTON 
+
+
+
+        def forgot_qsn_check():
+            if school_Entry == '':
+                messagebox.showerror("Invalid", "All fields are mandatory")
+            else:
+                pass
 
         
-        ####### Function to retrieve the date ######
+        ####### Function to retrieve the school name ######
 
         def get_school():
             school = school_Entry.get()
@@ -183,6 +192,7 @@ def open_new_window_forgot(event):
             school_show.place(x = 170, rely =0.5)
             school_show.focus()
              
+                        #### SCHOOL SELECT BUTTON 
 
         select_school_button = CTkButton(master = forgot_win,
                                         text = "Select",
@@ -204,10 +214,11 @@ def open_new_window_forgot(event):
     forgot_pass_Login()
 
         ############## Submit Question Button #######
-
+           
     submit_qsn_button = CTkButton(master=forgot_win, text="Submit",
                                     fg_color="green",
-                                    text_color="white"  
+                                    text_color="white",
+                                    command = forgot_qsn_check  
                                 )
     submit_qsn_button.place(relx = 0.32, rely = 0.7)
 
