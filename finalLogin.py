@@ -4,6 +4,7 @@ from PIL import Image, ImageTk
 from tkinter import ttk
 from tkinter import messagebox
 import webbrowser
+import sqlite3
 
 
 # Initialize the main window
@@ -220,6 +221,33 @@ for text, command in buttons:
 # Main Content Area
 main_frame = ctk.CTkFrame(root)
 main_frame.pack(side="right", expand=True, fill="both")
+
+# Backend 
+import sqlite3
+
+# Connect to SQLite database
+conn = sqlite3.connect("books.db")
+cursor = conn.cursor()
+
+# Create a table to store purchase details
+cursor.execute("""
+    CREATE TABLE IF NOT EXISTS purchases (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        book_title TEXT NOT NULL,
+        author TEXT NOT NULL,
+        genre TEXT NOT NULL,
+        quantity INTEGER NOT NULL,
+        total_price REAL NOT NULL,
+        purchase_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+""")
+
+conn.commit()
+conn.close()
+
+print("Purchases table created successfully!")
+
+
 
 # Show Home Page Initially
 show_frame(home_page)
