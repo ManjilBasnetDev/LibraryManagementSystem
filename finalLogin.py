@@ -200,10 +200,10 @@ def about_us():
     label = ctk.CTkLabel(main_frame, text="About Us", font=("Arial", 24, "bold"))
     label.pack(pady=20)
     
-    ctk.CTkLabel(main_frame, text="Our team\n1.Aryan Shrestha\n2.MnajilBasnet\n3.Abhishekhatiwada\n4.Arbaz rain", font=("Arial", 14)).pack(pady=10)
+    ctk.CTkLabel(main_frame, text="Our team\n1.Aryan Shrestha\n2.ManjilBasnet\n3.Abhishekhatiwada\n4.Arbaz rain", font=("Arial", 14)).pack(pady=10)
 
 # Sidebar Navigation
-sidebar = ctk.CTkFrame(root, width=200, corner_radius=10)
+sidebar = ctk.CTkFrame(root, width=200, corner_radius=10,fg_color='#dfd8ee')
 sidebar.pack(side="left", fill="y")
 
 buttons = [
@@ -216,10 +216,10 @@ buttons = [
 
 for text, command in buttons:
     btn = ctk.CTkButton(sidebar, text=text, command=lambda cmd=command: show_frame(cmd), font=("Arial", 14), corner_radius=10)
-    btn.pack(pady=15, padx=10)
+    btn.pack(pady=20, padx=15)
 
 # Main Content Area
-main_frame = ctk.CTkFrame(root)
+main_frame = ctk.CTkFrame(root,fg_color="#dfd8ee")
 main_frame.pack(side="right", expand=True, fill="both")
 
 # Backend 
