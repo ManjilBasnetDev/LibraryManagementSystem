@@ -14,16 +14,17 @@ Librarian_ID = "0956"
 
 # DATABASE BEGINNING
 
-# conn = sqlite3.connect('login.db')
-# c = conn.cursor()
+conn = sqlite3.connect('login.db')
+conn1 = sqlite3.connect('newAccounts.db')
+c = conn.cursor()
 
-# c.execute("""CREATE TABLE Login(
-#           Username text PRIMARY KEY,
-#           Password text
-#           )
-# """)
+c.execute("""CREATE TABLE IF NOT EXISTS Login(
+          Username text PRIMARY KEY,
+          Password text NOT NULL
+          )
+""")
 
-# conn.commit()
+conn.commit()
 
 # Create the background frame with a custom color
 bg_frame = CTkFrame(master=win, fg_color="#dfd8ee", corner_radius=0)
@@ -63,10 +64,14 @@ loginView.place(relx = 0.6, rely = 0.2)
 ##############Loginnnnnnnnn#######
 
 def checkLogin():
-    if Login_password_Entry.get() == '' or Login_username_Entry.get() == '':
+    username = Login_username_Entry.get()
+    password = Login_password_Entry.get()
+    if username == '' or password == '':
         messagebox.showerror("Invalid Credentials", "All fields are mandatory")
     else:
-        pass
+        c.execute("""INSERT INTO login(
+        Username, Password) VALUES (?, ?) """,username, password)
+        conn.commit()
 
 
 #Creating username entities
