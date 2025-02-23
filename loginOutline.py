@@ -5,6 +5,8 @@ from tkinter import messagebox
 from tkcalendar import DateEntry
 import sqlite3
 import os  # Added for file existence check
+import user_Home  # Import the home page module
+import librarian  # Import the librarian module
 
 Librarian_ID = "0956"
 
@@ -112,7 +114,6 @@ initialize_db()
 # ==================== GUI Setup ====================
 
 win = CTk()
-win.iconbitmap("logo.png")
 win.geometry("1920x1080")
 
 # Function to handle user registration (GUI logic)
@@ -146,10 +147,22 @@ def check_login_gui():
     
     if role == "user":
         messagebox.showinfo("Success", "User Login Successful")
-        open_user_dashboard()
+        
+        # Close the login window
+        win.destroy()
+        
+        # Open the home page
+        user_Home.main()  # Call the main function of the home page
+    
     elif role == "librarian":
         messagebox.showinfo("Success", "Librarian Login Successful")
-        open_librarian_dashboard()
+        
+        # Close the login window
+        win.destroy()
+        
+        # Open the librarian dashboard
+        librarian.main()  # Call the main function of the librarian module
+    
     else:
         messagebox.showerror("Error", "Invalid credentials!")
 
