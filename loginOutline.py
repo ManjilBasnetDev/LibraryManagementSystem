@@ -5,11 +5,21 @@ from tkinter import messagebox
 from tkcalendar import DateEntry
 import sqlite3
 
+Librarian_ID = "0956"
+
+empty_user_username = ()
+
+login_user_username = ('Manjil')
+login_user_password = ('Basnet')
+
+login_lib_username = 'Librarian'
+login_lib_password = '12345'
+
+
 win = CTk()
 win.iconbitmap("logo.png")
 win.geometry("1920x1080")  # Set a smaller window size
 
-Librarian_ID = "0956"
 
 
 # Create the background frame with a custom color
@@ -67,12 +77,14 @@ def checkLogin():
     password = Login_password_Entry.get()
     if username == '' or password == '':
         messagebox.showerror("Invalid Credentials", "All fields are mandatory")
-    elif username :
-        pass
-        # c.execute("""INSERT INTO login(
-        # Username, Password) VALUES (?, ?) """,username, password)
-        # conn.commit()
-
+    elif username == login_user_username and password == login_user_password :
+        # user()
+        messagebox.showinfo('Done', "User Successful")
+    elif username == login_lib_username and password == login_lib_password:
+        #librarian()
+        messagebox.showinfo('Done', "Librarian Successful")
+    else:
+        messagebox.showerror('Error','Invalid Details')    
 
 #Creating username entities
 
