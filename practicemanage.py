@@ -153,40 +153,31 @@ class ForgetPasswordPage:
         self.label = ctk.CTkLabel(self.frame, text="Forget Password")
         self.label.pack(pady=12, padx=10)
 
+        # Username Entry
         self.username_entry = ctk.CTkEntry(self.frame, placeholder_text="Username")
         self.username_entry.pack(pady=12, padx=10)
 
+        # Check Username Button
         self.check_button = ctk.CTkButton(self.frame, text="Check Username", command=self.check_username)
         self.check_button.pack(pady=12, padx=10)
 
+        # Security Question Label
         self.security_question_label = ctk.CTkLabel(self.frame, text="")
         self.security_question_label.pack(pady=12, padx=10)
 
+        # Security Answer Entry
         self.security_answer_entry = ctk.CTkEntry(self.frame, placeholder_text="Security Answer")
         self.security_answer_entry.pack(pady=12, padx=10)
 
+        # Verify Answer Button
         self.verify_button = ctk.CTkButton(self.frame, text="Verify Answer", command=self.verify_answer)
         self.verify_button.pack(pady=12, padx=10)
 
-        self.new_password_label = ctk.CTkLabel(self.frame, text="Enter your new password")
-        
-        self.new_password_frame = ctk.CTkFrame(self.frame)
-        self.new_password_entry = ctk.CTkEntry(self.new_password_frame, placeholder_text="New Password", show="*")
-        self.new_password_entry.pack(side="left", pady=12, padx=(0, 10))
-        self.show_new_password_button = ctk.CTkButton(self.new_password_frame, text="Show", width=60, command=lambda: self.toggle_password_visibility(self.new_password_entry, self.show_new_password_button))
-        self.show_new_password_button.pack(side="left", pady=12)
-
-        self.confirm_password_frame = ctk.CTkFrame(self.frame)
-        self.confirm_password_entry = ctk.CTkEntry(self.confirm_password_frame, placeholder_text="Confirm New Password", show="*")
-        self.confirm_password_entry.pack(side="left", pady=12, padx=(0, 10))
-        self.show_confirm_password_button = ctk.CTkButton(self.confirm_password_frame, text="Show", width=60, command=lambda: self.toggle_password_visibility(self.confirm_password_entry, self.show_confirm_password_button))
-        self.show_confirm_password_button.pack(side="left", pady=12)
-
-        self.reset_button = ctk.CTkButton(self.frame, text="Reset Password", command=self.reset_password)
-
+        # Back to Login Button
         self.back_button = ctk.CTkButton(self.frame, text="Back to Login", command=self.master.show_login_page)
         self.back_button.pack(pady=12, padx=10)
 
+        # Store user data temporarily
         self.user_data = None
 
     def check_username(self):
@@ -207,13 +198,41 @@ class ForgetPasswordPage:
 
         answer = self.security_answer_entry.get()
         if answer == self.user_data["security_answer"]:
-            self.new_password_label.pack(pady=(12, 0), padx=10)
-            self.new_password_frame.pack(pady=(0, 12), padx=10)
-            self.confirm_password_frame.pack(pady=12, padx=10)
-            self.reset_button.pack(pady=12, padx=10)
-            messagebox.showinfo("Success", "Security answer correct. Please enter a new password.")
+            # Close the current forget password window
+            self.master.withdraw()  # Hide the current window
+            self.open_reset_password_window()
         else:
             messagebox.showerror("Error", "Incorrect security answer")
+
+    def open_reset_password_window(self):
+        # Create a new top-level window
+        reset_window = ctk.CTkToplevel(self.master)
+        reset_window.title("Reset Password")
+        reset_window.geometry("400x300")
+
+        # New Password Frame
+        new_password_frame = ctk.CTkFrame(reset_window)
+        new_password_frame.pack(pady=20, padx=20, fill="both", expand=True)
+
+        # New Password Entry
+        self.new_password_entry = ctk.CTkEntry(new_password_frame, placeholder_text="New Password", show="*")
+        self.new_password_entry.pack(pady=12, padx=10)
+
+        # Show/Hide Password Button
+        self.show_password_button = ctk.CTkButton(new_password_frame, text="Show", width=60, command=lambda: self.toggle_password_visibility(self.new_password_entry, self.show_password_button))
+        self.show_password_button.pack(pady=12, padx=10)
+
+        # Confirm Password Entry
+        self.confirm_password_entry = ctk.CTkEntry(new_password_frame, placeholder_text="Confirm New Password", show="*")
+        self.confirm_password_entry.pack(pady=12, padx=10)
+
+        # Show/Hide Confirm Password Button
+        self.show_confirm_password_button = ctk.CTkButton(new_password_frame, text="Show", width=60, command=lambda: self.toggle_password_visibility(self.confirm_password_entry, self.show_confirm_password_button))
+        self.show_confirm_password_button.pack(pady=12, padx=10)
+
+        # Reset Password Button
+        reset_button = ctk.CTkButton(new_password_frame, text="Reset Password", command=lambda: self.reset_password(reset_window))
+        reset_button.pack(pady=12, padx=10)
 
     def toggle_password_visibility(self, entry_widget, button_widget):
         if entry_widget.cget("show") == "":
@@ -223,7 +242,7 @@ class ForgetPasswordPage:
             entry_widget.configure(show="")
             button_widget.configure(text="Hide")
 
-    def reset_password(self):
+    def reset_password(self, reset_window):
         new_password = self.new_password_entry.get()
         confirm_password = self.confirm_password_entry.get()
 
@@ -237,7 +256,8 @@ class ForgetPasswordPage:
 
         self.update_password(self.username_entry.get(), new_password)
         messagebox.showinfo("Success", "Password has been reset successfully")
-        self.master.show_login_page()
+        reset_window.destroy()  # Close the reset password window
+        self.master.show_homepage()  # Redirect to homepage
 
     def update_password(self, username, new_password):
         with open("users.json", "r") as f:
@@ -247,7 +267,6 @@ class ForgetPasswordPage:
 
         with open("users.json", "w") as f:
             json.dump(users, f)
-
 
 class MainPage:
     def __init__(self, master):
