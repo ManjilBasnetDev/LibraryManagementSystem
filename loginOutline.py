@@ -7,14 +7,17 @@ import sqlite3
 
 Librarian_ID = "0956"
 
-empty_user_username = ()
-
-login_user_username = ('Manjil')
-login_user_password = ('Basnet')
+login_user_username = 'Manjil'
+login_user_password = 'Basnet'
 
 login_lib_username = 'Librarian'
 login_lib_password = '12345'
 
+created_library_username = 'LibrarianC'
+created_library_password = 'password123'
+
+created_user_username = 'UserC'
+created_user_password = 'PasswordC'
 
 win = CTk()
 win.iconbitmap("logo.png")
@@ -77,10 +80,17 @@ def checkLogin():
     password = Login_password_Entry.get()
     if username == '' or password == '':
         messagebox.showerror("Invalid Credentials", "All fields are mandatory")
-    elif username == login_user_username and password == login_user_password :
+    elif (username == login_user_username and password == login_user_password)  :
         # user()
         messagebox.showinfo('Done', "User Successful")
+    elif (username == created_user_username and password == created_user_password):
+        # user()
+        messagebox.showinfo('Done', "User Successful")
+              
     elif username == login_lib_username and password == login_lib_password:
+        #librarian()
+        messagebox.showinfo('Done', "Librarian Successful")
+    elif username == created_library_username and password == created_library_password:
         #librarian()
         messagebox.showinfo('Done', "Librarian Successful")
     else:
@@ -283,15 +293,22 @@ Create_password_Entry = CTkEntry(master=loginView.tab("Create New"),
 Create_password_Entry.place(relx=0.12, rely=0.4)
 
 
+def update_created_details():
+     
+    # created_username = Create_username_Entry.get()
+    # created_password = Create_password_Entry.get()
+
+    # created_username
+
 
 #Creating password entities for Create New Account
 
-Create_passwordLabel = CTkLabel(master = loginView.tab("Create New"), 
+    Create_passwordLabel = CTkLabel(master = loginView.tab("Create New"), 
                          text = "Password:", text_color="black",
                          font=("Helvatica",20),
                          width = 30, height = 30,
                          )
-Create_passwordLabel.place(relx = 0.12, rely = 0.3)
+    Create_passwordLabel.place(relx = 0.12, rely = 0.3)
 
 
 ######## Radio button : Choose user or librarian while creating a account 
