@@ -5,11 +5,24 @@ from tkinter import messagebox
 from tkcalendar import DateEntry
 import sqlite3
 
+Librarian_ID = "0956"
+
+login_user_username = 'Manjil'
+login_user_password = 'Basnet'
+
+login_lib_username = 'Librarian'
+login_lib_password = '12345'
+
+created_library_username = 'LibrarianC'
+created_library_password = 'password123'
+
+created_user_username = 'UserC'
+created_user_password = 'PasswordC'
+
 win = CTk()
 win.iconbitmap("logo.png")
 win.geometry("1920x1080")  # Set a smaller window size
 
-Librarian_ID = "0956"
 
 
 # Create the background frame with a custom color
@@ -51,14 +64,16 @@ loginView.place(relx = 0.6, rely = 0.2)
 
 def checkLogin():
 
-    # def database_login():
-    #     conn = sqlite3.connect("login.db")
-    #     c = conn.cursor()
-    #     c.execute("""
-    #     SELECT 
-    #     """)
-    #     conn.commit()
-    #     return conn, c
+#     def database_login():
+#         conn = sqlite3.connect("login.db")
+#         c = conn.cursor()
+#         c.execute("""
+#         CREATE TABLE IF NOY EXISTS login(
+#                 Username PRIMARY KEY,
+#                 Password NOT NULL) 
+#         """)
+#         conn.commit()
+#         return conn, c
 
     # Initialize the database and get the connection and cursor
 
@@ -67,12 +82,21 @@ def checkLogin():
     password = Login_password_Entry.get()
     if username == '' or password == '':
         messagebox.showerror("Invalid Credentials", "All fields are mandatory")
-    elif username :
-        pass
-        # c.execute("""INSERT INTO login(
-        # Username, Password) VALUES (?, ?) """,username, password)
-        # conn.commit()
-
+    elif (username == login_user_username and password == login_user_password)  :
+        # user()
+        messagebox.showinfo('Done', "User Successful")
+    elif (username == created_user_username and password == created_user_password):
+        # user()
+        messagebox.showinfo('Done', "User Successful")
+              
+    elif username == login_lib_username and password == login_lib_password:
+        #librarian()
+        messagebox.showinfo('Done', "Librarian Successful")
+    elif username == created_library_username and password == created_library_password:
+        #librarian()
+        messagebox.showinfo('Done', "Librarian Successful")
+    else:
+        messagebox.showerror('Error','Invalid Details')    
 
 #Creating username entities
 
@@ -271,15 +295,22 @@ Create_password_Entry = CTkEntry(master=loginView.tab("Create New"),
 Create_password_Entry.place(relx=0.12, rely=0.4)
 
 
+def update_created_details():
+     
+    # created_username = Create_username_Entry.get()
+    # created_password = Create_password_Entry.get()
+
+    # created_username
+
 
 #Creating password entities for Create New Account
 
-Create_passwordLabel = CTkLabel(master = loginView.tab("Create New"), 
+    Create_passwordLabel = CTkLabel(master = loginView.tab("Create New"), 
                          text = "Password:", text_color="black",
                          font=("Helvatica",20),
                          width = 30, height = 30,
                          )
-Create_passwordLabel.place(relx = 0.12, rely = 0.3)
+    Create_passwordLabel.place(relx = 0.12, rely = 0.3)
 
 
 ######## Radio button : Choose user or librarian while creating a account 
@@ -403,4 +434,3 @@ Create_button = CTkButton(master=loginView.tab("Create New"),
 Create_button.place(x = 50, y = 260)
 
 win.mainloop()  # Make the window visible
-
