@@ -12,20 +12,6 @@ win.geometry("1920x1080")  # Set a smaller window size
 Librarian_ID = "0956"
 
 
-# DATABASE BEGINNING
-
-conn = sqlite3.connect('login.db')
-conn1 = sqlite3.connect('newAccounts.db')
-c = conn.cursor()
-
-c.execute("""CREATE TABLE IF NOT EXISTS Login(
-          Username text PRIMARY KEY,
-          Password text NOT NULL
-          )
-""")
-
-conn.commit()
-
 # Create the background frame with a custom color
 bg_frame = CTkFrame(master=win, fg_color="#dfd8ee", corner_radius=0)
 bg_frame.pack(fill="both", expand=True)
@@ -64,14 +50,28 @@ loginView.place(relx = 0.6, rely = 0.2)
 ##############Loginnnnnnnnn#######
 
 def checkLogin():
+
+    # def database_login():
+    #     conn = sqlite3.connect("login.db")
+    #     c = conn.cursor()
+    #     c.execute("""
+    #     SELECT 
+    #     """)
+    #     conn.commit()
+    #     return conn, c
+
+    # Initialize the database and get the connection and cursor
+
+    # conn, c = database_login()
     username = Login_username_Entry.get()
     password = Login_password_Entry.get()
     if username == '' or password == '':
         messagebox.showerror("Invalid Credentials", "All fields are mandatory")
-    else:
-        c.execute("""INSERT INTO login(
-        Username, Password) VALUES (?, ?) """,username, password)
-        conn.commit()
+    elif username :
+        pass
+        # c.execute("""INSERT INTO login(
+        # Username, Password) VALUES (?, ?) """,username, password)
+        # conn.commit()
 
 
 #Creating username entities
@@ -301,6 +301,18 @@ radio_Librarian = CTkRadioButton(master=loginView.tab("Create New"),
 radio_Librarian.place(x = 210, y = 210)
 
 ###### New windoww
+
+# def newAccountsdatabase():
+
+    # if 
+    # usernameCreate = Create_username_Entry.get()
+    # passwordCreate = Create_password_Entry.get()
+    # conn = sqlite3.connect('Databse.db')
+    # c = conn.cursor()
+    # c.execute(""" CREATE TABLE IF NOT EXISTS newAccounts(New_Username, New_Password)
+    #           """)
+              
+
 
 
 def open_new_win_create():
