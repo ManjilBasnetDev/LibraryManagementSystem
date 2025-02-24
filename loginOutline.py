@@ -261,7 +261,8 @@ Login_password_Entry.place(relx=0.12, rely=0.4)
 # Show Password Checkbutton for Login
 show_password_login = BooleanVar()
 show_password_login.set(False)
-show_password_checkbutton_login = CTkCheckBox(master=loginView.tab("Login"), text="Show Password", variable=show_password_login, command=lambda: toggle_password_visibility(Login_password_Entry, show_password_login))
+show_password_checkbutton_login = CTkCheckBox(master=loginView.tab("Login"), text="Show Password", variable=show_password_login,
+                                               command=lambda: toggle_password_visibility(Login_password_Entry, show_password_login))
 show_password_checkbutton_login.place(relx=0.42, rely=0.31)
 
 # Forgot Password Label
@@ -277,19 +278,22 @@ Create_username_Entry = CTkEntry(master=loginView.tab("Create New"), placeholder
 Create_username_Entry.place(relx=0.12, rely=0.156)
 
 CTkLabel(master=loginView.tab("Create New"), text="Password:", text_color="black", font=("Helvetica", 20)).place(relx=0.12, rely=0.3)
-Create_password_Entry = CTkEntry(master=loginView.tab("Create New"), placeholder_text="Enter your password", height=40, fg_color="#ffffff", text_color="black", width=300, show="*")
+Create_password_Entry = CTkEntry(master=loginView.tab("Create New"), placeholder_text="Enter your password", height=40, fg_color="#ffffff",
+                                  text_color="black", width=300, show="*")
 Create_password_Entry.place(relx=0.12, rely=0.4)
 
 # Show Password Checkbutton for Create New
 show_password_create = BooleanVar()
 show_password_create.set(False)
-show_password_checkbutton_create = CTkCheckBox(master=loginView.tab("Create New"), text="Show Password", variable=show_password_create, command=lambda: toggle_password_visibility(Create_password_Entry, show_password_create))
+show_password_checkbutton_create = CTkCheckBox(master=loginView.tab("Create New"), text="Show Password", variable=show_password_create,
+                                                command=lambda: toggle_password_visibility(Create_password_Entry, show_password_create))
 show_password_checkbutton_create.place(relx=0.42, rely=0.31)
 
 user_or_librarian = StringVar()
 CTkRadioButton(master=loginView.tab("Create New"), text="User", variable=user_or_librarian, value="1", text_color="black").place(x=90, y=210)
 CTkRadioButton(master=loginView.tab("Create New"), text="Librarian", variable=user_or_librarian, value="2", text_color="black").place(x=210, y=210)
 
-CTkButton(master=loginView.tab("Create New"), text="Create Account", font=("Calibri", 20), corner_radius=15, fg_color="green", height=40, width=300, command=register_user_gui).place(x=50, y=260)
+CTkButton(master=loginView.tab("Create New"), text="Create Account", font=("Calibri", 20), corner_radius=15, fg_color="green", height=40, width=300,
+           command=register_user_gui).place(x=50, y=260)
 
 win.mainloop()  # Make the window visible

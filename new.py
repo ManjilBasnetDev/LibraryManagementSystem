@@ -9,7 +9,7 @@ import user_Home  # Import the home page module
 import librarian  # Import the librarian module
 import forgot  # Import the forgot password module
 
-Librarian_ID = "0956"
+Librarian_ID = "0956"  # Predefined Librarian ID for verification
 
 # ==================== SQLite3 Backend Code ====================
 
@@ -143,6 +143,35 @@ def register_user_gui():
         messagebox.showerror("Error", "All fields are required!")
         return
     
+    # If the role is librarian, ask for Librarian ID
+    if role == "librarian":
+        librarian_id_window = CTkToplevel(win)
+        librarian_id_window.title("Librarian ID Verification")
+        librarian_id_window.geometry("400x200")
+
+        # Librarian ID Label
+        CTkLabel(librarian_id_window, text="Enter Librarian ID:", font=("Helvetica", 16)).pack(pady=20)
+
+        # Librarian ID Entry
+        librarian_id_entry = CTkEntry(librarian_id_window, placeholder_text="Enter Librarian ID", width=300)
+        librarian_id_entry.pack(pady=10)
+
+        # Submit Button for Librarian ID
+        def submit_librarian_id():
+            entered_id = librarian_id_entry.get()
+            if entered_id != Librarian_ID:
+                messagebox.showerror("Error", "Invalid Librarian ID!")
+                return
+            else:
+                librarian_id_window.destroy()
+                open_security_window(username, password, role)
+
+        CTkButton(librarian_id_window, text="Submit", command=submit_librarian_id).pack(pady=20)
+    else:
+        open_security_window(username, password, role)
+
+# Function to open the security question window
+def open_security_window(username, password, role):
     # Open a new window for security question and answer
     security_window = CTkToplevel(win)
     security_window.title("Security Question")
@@ -261,7 +290,8 @@ Login_password_Entry.place(relx=0.12, rely=0.4)
 # Show Password Checkbutton for Login
 show_password_login = BooleanVar()
 show_password_login.set(False)
-show_password_checkbutton_login = CTkCheckBox(master=loginView.tab("Login"), text="Show Password", variable=show_password_login, command=lambda: toggle_password_visibility(Login_password_Entry, show_password_login))
+show_password_checkbutton_login = CTkCheckBox(master=loginView.tab("Login"), text="Show Password", variable=show_password_login,
+                                               command=lambda: toggle_password_visibility(Login_password_Entry, show_password_login))
 show_password_checkbutton_login.place(relx=0.42, rely=0.31)
 
 # Forgot Password Label
@@ -277,19 +307,22 @@ Create_username_Entry = CTkEntry(master=loginView.tab("Create New"), placeholder
 Create_username_Entry.place(relx=0.12, rely=0.156)
 
 CTkLabel(master=loginView.tab("Create New"), text="Password:", text_color="black", font=("Helvetica", 20)).place(relx=0.12, rely=0.3)
-Create_password_Entry = CTkEntry(master=loginView.tab("Create New"), placeholder_text="Enter your password", height=40, fg_color="#ffffff", text_color="black", width=300, show="*")
+Create_password_Entry = CTkEntry(master=loginView.tab("Create New"), placeholder_text="Enter your password", height=40, fg_color="#ffffff",
+                                  text_color="black", width=300, show="*")
 Create_password_Entry.place(relx=0.12, rely=0.4)
 
 # Show Password Checkbutton for Create New
 show_password_create = BooleanVar()
 show_password_create.set(False)
-show_password_checkbutton_create = CTkCheckBox(master=loginView.tab("Create New"), text="Show Password", variable=show_password_create, command=lambda: toggle_password_visibility(Create_password_Entry, show_password_create))
+show_password_checkbutton_create = CTkCheckBox(master=loginView.tab("Create New"), text="Show Password", variable=show_password_create,
+                                                command=lambda: toggle_password_visibility(Create_password_Entry, show_password_create))
 show_password_checkbutton_create.place(relx=0.42, rely=0.31)
 
 user_or_librarian = StringVar()
 CTkRadioButton(master=loginView.tab("Create New"), text="User", variable=user_or_librarian, value="1", text_color="black").place(x=90, y=210)
 CTkRadioButton(master=loginView.tab("Create New"), text="Librarian", variable=user_or_librarian, value="2", text_color="black").place(x=210, y=210)
 
-CTkButton(master=loginView.tab("Create New"), text="Create Account", font=("Calibri", 20), corner_radius=15, fg_color="green", height=40, width=300, command=register_user_gui).place(x=50, y=260)
+CTkButton(master=loginView.tab("Create New"), text="Create Account", font=("Calibri", 20), corner_radius=15, fg_color="green", height=40, width=300,
+           command=register_user_gui).place(x=50, y=260)
 
 win.mainloop()  # Make the window visible
