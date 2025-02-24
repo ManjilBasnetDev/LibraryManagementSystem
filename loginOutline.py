@@ -7,6 +7,7 @@ import sqlite3
 import os  # Added for file existence check
 import user_Home  # Import the home page module
 import librarian  # Import the librarian module
+import forgot  # Import the forgot password module
 
 Librarian_ID = "0956"
 
@@ -25,14 +26,27 @@ def initialize_db():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT UNIQUE NOT NULL,
             password TEXT NOT NULL,
-            role TEXT NOT NULL CHECK(role IN ('user', 'librarian'))
+            role TEXT NOT NULL CHECK(role IN ('user', 'librarian')),
+            security_question TEXT,
+            security_answer TEXT
         )
     ''')
+    
+    # Check if the security_question column exists, and if not, add it
+    cursor.execute("PRAGMA table_info(users)")
+    columns = cursor.fetchall()
+    column_names = [column[1] for column in columns]
+    
+    if 'security_question' not in column_names:
+        cursor.execute("ALTER TABLE users ADD COLUMN security_question TEXT")
+    
+    if 'security_answer' not in column_names:
+        cursor.execute("ALTER TABLE users ADD COLUMN security_answer TEXT")
     
     conn.commit()
     conn.close()
 
-def register_user(username, password, role):
+def register_user(username, password, role, security_question, security_answer):
     """
     Registers a new user or librarian in the database.
 
@@ -40,6 +54,8 @@ def register_user(username, password, role):
         username (str): The username of the user.
         password (str): The password of the user.
         role (str): The role of the user ('user' or 'librarian').
+        security_question (str): The security question for password recovery.
+        security_answer (str): The answer to the security question.
 
     Returns:
         bool: True if registration is successful, False otherwise.
@@ -50,7 +66,8 @@ def register_user(username, password, role):
         cursor = conn.cursor()
 
         # Insert the new user into the database
-        cursor.execute("INSERT INTO users (username, password, role) VALUES (?, ?, ?)", (username, password, role))
+        cursor.execute("INSERT INTO users (username, password, role, security_question, security_answer) VALUES (?, ?, ?, ?, ?)",
+                      (username, password, role, security_question, security_answer))
         conn.commit()  # Commit the transaction
         return True  # Registration successful
 
@@ -126,13 +143,37 @@ def register_user_gui():
         messagebox.showerror("Error", "All fields are required!")
         return
     
-    # Call the backend function to register the user
-    if register_user(username, password, role):
-        messagebox.showinfo("Success", "Account created successfully. Please log in.")
-        Create_username_Entry.delete(0, END)
-        Create_password_Entry.delete(0, END)
-    else:
-        messagebox.showerror("Error", "Username already exists!")
+    # Open a new window for security question and answer
+    security_window = CTkToplevel(win)
+    security_window.title("Security Question")
+    security_window.geometry("400x300")
+
+    # Security Question Label
+    security_question_label = CTkLabel(security_window, text="What is your favorite color?", font=("Helvetica", 16))
+    security_question_label.pack(pady=20)
+
+    # Security Answer Entry
+    security_answer_entry = CTkEntry(security_window, placeholder_text="Enter your favorite color", width=300)
+    security_answer_entry.pack(pady=10)
+
+    # Submit Button
+    def submit_security():
+        security_answer = security_answer_entry.get()
+        if not security_answer:
+            messagebox.showerror("Error", "Security answer is required!")
+            return
+        
+        # Call the backend function to register the user
+        if register_user(username, password, role, "What is your favorite color?", security_answer):
+            messagebox.showinfo("Success", "Account created successfully. Please log in.")
+            Create_username_Entry.delete(0, END)
+            Create_password_Entry.delete(0, END)
+            security_window.destroy()  # Close the security window
+        else:
+            messagebox.showerror("Error", "Username already exists!")
+
+    submit_button = CTkButton(security_window, text="Submit", command=submit_security)
+    submit_button.pack(pady=20)
 
 # Function to check login credentials (GUI logic)
 def check_login_gui():
@@ -166,12 +207,12 @@ def check_login_gui():
     else:
         messagebox.showerror("Error", "Invalid credentials!")
 
-# Dummy functions for dashboard navigation
-def open_user_dashboard():
-    messagebox.showinfo("User Dashboard", "Welcome to the User Dashboard")
-
-def open_librarian_dashboard():
-    messagebox.showinfo("Librarian Dashboard", "Welcome to the Librarian Dashboard")
+# Function to open the forgot password window
+def open_forgot_password():
+    forgot_window = CTkToplevel(win)
+    forgot_window.title("Forgot Password")
+    forgot_window.geometry("400x400")
+    forgot.ForgetPasswordPage(forgot_window)  # Open the forgot password page
 
 # GUI Elements Setup
 bg_frame = CTkFrame(master=win, fg_color="#dfd8ee", corner_radius=0)
@@ -202,22 +243,27 @@ loginView.add("Create New")
 loginView.place(relx=0.6, rely=0.2)
 
 # Login Section
-CTkLabel(master=loginView.tab("Login"), text="Username:", text_color="black", font=("Helvatica", 20)).place(relx=0.12, rely=0.06)
+CTkLabel(master=loginView.tab("Login"), text="Username:", text_color="black", font=("Helvetica", 20)).place(relx=0.12, rely=0.06)
 Login_username_Entry = CTkEntry(master=loginView.tab("Login"), placeholder_text="Enter your username", fg_color="#ffffff", text_color="black", height=40, width=300)
 Login_username_Entry.place(relx=0.12, rely=0.156)
 
-CTkLabel(master=loginView.tab("Login"), text="Password:", text_color="black", font=("Helvatica", 20)).place(relx=0.12, rely=0.3)
+CTkLabel(master=loginView.tab("Login"), text="Password:", text_color="black", font=("Helvetica", 20)).place(relx=0.12, rely=0.3)
 Login_password_Entry = CTkEntry(master=loginView.tab("Login"), placeholder_text="Enter your password", height=40, fg_color="#ffffff", text_color="black", width=300, show="*")
 Login_password_Entry.place(relx=0.12, rely=0.4)
+
+# Forgot Password Label
+forgot_password_label = CTkLabel(master=loginView.tab("Login"), text="Forgot Password?", text_color="black", font=("Helvetica", 20, "underline"), cursor="hand2")
+forgot_password_label.place(relx=0.285, rely=0.75)
+forgot_password_label.bind("<Button-1>", lambda e: open_forgot_password())
 
 CTkButton(master=loginView.tab("Login"), text="Log in", font=("Calibri", 20), corner_radius=15, fg_color="green", height=40, width=300, command=check_login_gui).place(x=50, y=200)
 
 # Registration Section
-CTkLabel(master=loginView.tab("Create New"), text="Username:", text_color="black", font=("Helvatica", 20)).place(relx=0.12, rely=0.06)
+CTkLabel(master=loginView.tab("Create New"), text="Username:", text_color="black", font=("Helvetica", 20)).place(relx=0.12, rely=0.06)
 Create_username_Entry = CTkEntry(master=loginView.tab("Create New"), placeholder_text="Enter your username", fg_color="#ffffff", text_color="black", height=40, width=300)
 Create_username_Entry.place(relx=0.12, rely=0.156)
 
-CTkLabel(master=loginView.tab("Create New"), text="Password:", text_color="black", font=("Helvatica", 20)).place(relx=0.12, rely=0.3)
+CTkLabel(master=loginView.tab("Create New"), text="Password:", text_color="black", font=("Helvetica", 20)).place(relx=0.12, rely=0.3)
 Create_password_Entry = CTkEntry(master=loginView.tab("Create New"), placeholder_text="Enter your password", height=40, fg_color="#ffffff", text_color="black", width=300, show="*")
 Create_password_Entry.place(relx=0.12, rely=0.4)
 
