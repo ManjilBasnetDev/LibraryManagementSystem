@@ -145,15 +145,17 @@ def register_user_gui():
     
     # If the role is librarian, ask for Librarian ID
     if role == "librarian":
-        librarian_id_window = CTkToplevel(win)
+        librarian_id_window = Tk()  # Use Tk instead of CTk for the new window
         librarian_id_window.title("Librarian ID Verification")
         librarian_id_window.geometry("400x200")
+        librarian_id_window.configure(bg="#dfd8ee")  # Set background color to match login theme
+        librarian_id_window.lift()  # Bring the window to the front
 
         # Librarian ID Label
-        CTkLabel(librarian_id_window, text="Enter Librarian ID:", font=("Helvetica", 16)).pack(pady=20)
+        Label(librarian_id_window, text="Enter Librarian ID:", font=("Helvetica", 16), bg="#dfd8ee").pack(pady=20)
 
         # Librarian ID Entry
-        librarian_id_entry = CTkEntry(librarian_id_window, placeholder_text="Enter Librarian ID", width=300)
+        librarian_id_entry = Entry(librarian_id_window, width=30)
         librarian_id_entry.pack(pady=10)
 
         # Submit Button for Librarian ID
@@ -166,23 +168,26 @@ def register_user_gui():
                 librarian_id_window.destroy()
                 open_security_window(username, password, role)
 
-        CTkButton(librarian_id_window, text="Submit", command=submit_librarian_id).pack(pady=20)
+        submit_button = CTkButton(librarian_id_window, text="Submit", command=submit_librarian_id, bg_color="green")  # Set button color to green
+        submit_button.pack(pady=20)
+        librarian_id_window.mainloop()  # Start the Tkinter event loop for the new window
     else:
         open_security_window(username, password, role)
 
 # Function to open the security question window
 def open_security_window(username, password, role):
     # Open a new window for security question and answer
-    security_window = CTkToplevel(win)
+    security_window = Tk()  # Use Tk instead of CTk for the new window
     security_window.title("Security Question")
     security_window.geometry("400x300")
+    security_window.configure(bg="#dfd8ee")  # Set background color to match login theme
+    security_window.lift()  # Bring the window to the front
 
     # Security Question Label
-    security_question_label = CTkLabel(security_window, text="What is your favorite color?", font=("Helvetica", 16))
-    security_question_label.pack(pady=20)
+    Label(security_window, text="What is your favorite color?", font=("Helvetica", 16), bg="#dfd8ee").pack(pady=20)
 
     # Security Answer Entry
-    security_answer_entry = CTkEntry(security_window, placeholder_text="Enter your favorite color", width=300)
+    security_answer_entry = Entry(security_window, width=30)
     security_answer_entry.pack(pady=10)
 
     # Submit Button
@@ -201,8 +206,9 @@ def open_security_window(username, password, role):
         else:
             messagebox.showerror("Error", "Username already exists!")
 
-    submit_button = CTkButton(security_window, text="Submit", command=submit_security)
+    submit_button = CTkButton(security_window, text="Submit", command=submit_security, bg_color="green", fg_color="white")  # Set button color to green
     submit_button.pack(pady=20)
+    security_window.mainloop()  # Start the Tkinter event loop for the new window
 
 # Function to check login credentials (GUI logic)
 def check_login_gui():
